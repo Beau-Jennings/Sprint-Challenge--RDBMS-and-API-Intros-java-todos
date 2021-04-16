@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,9 +46,11 @@ public class User extends Auditable
     @Email
     private String primaryemail;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JsonIgnoreProperties(value = "user", allowSetters = true)
-    private Set<Todos> todos = new HashSet<>();
+    private List<Todos> todos = new ArrayList<>();
 
 
     /**
@@ -165,5 +169,15 @@ public class User extends Auditable
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public List<Todos> getTodos()
+    {
+        return todos;
+    }
+
+    public void setTodos(List<Todos> todos)
+    {
+        this.todos = todos;
     }
 }
